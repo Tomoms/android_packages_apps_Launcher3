@@ -73,4 +73,20 @@
     <string name="tapered_rect_shape_title">Tapered rect</string>
     <string name="teardrop_shape_title">Teardrop</string>
     <string name="rounded_rect_shape_title">Rounded rect</string>
+
+    <!-- heading shown when user opens work apps tab while work apps are paused (turned off, for us) -->
+    <string name="work_apps_paused_title_calyx">Work apps are off</string>
+
+    <!-- button string shown pause work profile (turn off, for us) -->
+    <string name="work_apps_pause_btn_text_calyx">Turn off work apps</string>
+
+    <!-- button string shown enable work profile (turn on, for us) -->
+    <string name="work_apps_enable_btn_text_calyx">Turn on work apps</string>
+
+    <!-- body shown when user opens work apps tab while work apps are paused (turned off, for us) -->
+    <string name="work_apps_paused_info_body_calyx">Your work apps can’t send you notifications, use your battery, or access your location</string>
+
+    <!-- body shown when user opens work apps tab while work apps are paused (turned off, for us) and calls and texts are unavailable -->
+    <string name="work_apps_paused_telephony_unavailable_body_calyx">Your work apps can’t receive phone calls or text messages, send you notifications, use your battery, or access your location</string>
+
 </resources>
