@@ -52,6 +52,7 @@ public class DefaultAppSearchAlgorithm implements SearchAlgorithm<AdapterItem> {
     private final UserCache mUserCache;
     private final Handler mResultHandler;
     private final boolean mAddNoResultsMessage;
+    private long mSearchGeneration;
 
     public DefaultAppSearchAlgorithm(Context context, LooperExecutor uiExecutor) {
         this(context, uiExecutor, false);
@@ -68,6 +69,7 @@ public class DefaultAppSearchAlgorithm implements SearchAlgorithm<AdapterItem> {
 
     @Override
     public void cancel(boolean interruptActiveRequests) {
+        mSearchGeneration++;
         if (interruptActiveRequests) {
             mResultHandler.removeCallbacksAndMessages(null);
         }
@@ -75,6 +77,8 @@ public class DefaultAppSearchAlgorithm implements SearchAlgorithm<AdapterItem> {
 
     @Override
     public void doSearch(String query, SearchCallback<AdapterItem> callback) {
+        mSearchGeneration++;
+        final long searchGeneration = mSearchGeneration;
         mAppState.getModel().enqueueModelUpdateTask((taskController, dataModel, apps) ->  {
             ArrayList<AdapterItem> result = getTitleMatchResult(mAppState.getContext(),
 		    apps.data.stream().filter(this::isSearchableApp).toList(),
@@ -88,7 +92,11 @@ public class DefaultAppSearchAlgorithm implements SearchAlgorithm<AdapterItem> {
             if (mAddNoResultsMessage && result.isEmpty()) {
                 result.add(getEmptyMessageAdapterItem(query));
             }
-            mResultHandler.post(() -> callback.onSearchResult(query, result));
+            mResultHandler.post(() -> {
+                if (searchGeneration == mSearchGeneration) {
+                    callback.onSearchResult(query, result);
+                }
+            });
         });
     }
 
