@@ -265,7 +265,10 @@ public class AppsSearchContainerLayout extends ExtendedEditText
         } else {
             // insets.top originates from SystemWindowManagerProxy.normalizeWindowInsets:
             // max(statusBars.top, android:dimen/status_bar_height_portrait, displayCutout.top)
-            mlp.topMargin = insets.top;
+            if (mAppsView.getSearchUiDelegate().isSearchBarFloating()
+                    || mLauncher.getDeviceProfile().getDeviceProperties().isTablet()) {
+                mlp.topMargin = insets.top;
+            }
         }
         requestLayout();
     }
