@@ -195,7 +195,7 @@ public class WorkProfileManager extends UserProfileManager
     }
 
     private boolean isEduSeen() {
-        return LauncherPrefs.get(mAllApps.getContext()).get(WORK_EDU_STEP) != 0;
+	return true;
     }
 
     private void onWorkFabClicked(View view) {
